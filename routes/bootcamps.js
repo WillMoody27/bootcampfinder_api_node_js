@@ -1,35 +1,24 @@
 // Access express router
 const express = require("express");
 const router = express.Router(); // Access router
+const {
+  getBootcamps,
+  getBootcamp,
+  createBootcamp,
+  updateBootcamp,
+  deleteBootcamp,
+} = require("../controllers/bootcamps"); // Import controller methods
 
-// GET
-router.get("/", (req, res) => {
-  res.status(200).json({ success: true, msg: "Show all bootcamps" });
-});
+// Route methods
+// Route methods [no id] for GET (all) and POST
+router.route("/").get(getBootcamps).post(createBootcamp); // Get all bootcamps and create new bootcamp
 
-// GET
-router.get("/:id", (req, res) => {
-  res.status(200).json({ success: true, msg: `Get bootcamp ${req.params.id}` });
-});
-
-// POST
-router.post("/", (req, res) => {
-  res.status(200).json({ success: true, msg: "Create new bootcamp" });
-});
-
-// PUT
-router.put("/:id", (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `Update bootcamp ${req.params.id}` });
-});
-
-// DELETE
-router.delete("/:id", (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, msg: `Delete bootcamp ${req.params.id}` });
-});
+// Route methods [by id] for GET (single), PUT, and DELETE
+router
+  .route("/:id")
+  .get(getBootcamp)
+  .put(updateBootcamp)
+  .delete(deleteBootcamp); // Get single bootcamp, update bootcamp, and delete bootcamp (by id
 
 // Export router - this allows us to use the routes/bootcamps.js file. Connects the routes/bootcamps.js file to the server.js file.
 module.exports = router;
